@@ -9,17 +9,10 @@ from scipy.stats import multivariate_normal as mvn
 
 
 class LMM:
-    def __init__(self, n_features, noise_var=None):
+    def __init__(self, n_features):
         self.mean = np.zeros(n_features)
         self.ranef_cov = np.eye(n_features)
-
-        if noise_var is None:
-            self._fit_noise = True
-            self.noise = 1.0
-
-        else:
-            self._fit_noise = False
-            self.noise = noise_var
+        self.noise = 1.0
 
     def log_likelihood(self, X, y):
         m, C, v = self.mean, self.ranef_cov, self.noise
@@ -80,7 +73,7 @@ class LMM:
 
         mean = m_agg / num_pairs
         ranef_cov = mm_agg / num_pairs - np.outer(mean, mean)
-        v = rss_agg / num_obs if self._fit_noise else self.noise
+        v = rss_agg / num_obs
 
         return mean, ranef_cov, v
 
