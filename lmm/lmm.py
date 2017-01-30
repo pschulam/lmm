@@ -45,7 +45,7 @@ class LMM:
             num_iter += 1
             delta = (logl - old_logl) / np.abs(old_logl)
 
-            m = msg.format(num_iter, logl, delta)
+            m = msg.format(num_iter, logl / len(Xy_pairs), delta)
             logging.info(m)
 
             if delta < tol or num_iter >= max_iter:
